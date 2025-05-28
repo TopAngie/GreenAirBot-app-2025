@@ -157,18 +157,17 @@ public class SignUp extends AppCompatActivity {
             userData.put("password", password);  // Hash the password in a real app
 
             // Save data to Firestore
-            firestore.collection("users")  // Firestore collection name
-                    .document(email)  // Using email as the document ID
-                    .set(userData)  // Save the userData map to Firestore
+              firestore.collection("users")
+                    .document(email)
+                    .set(userData)
                     .addOnSuccessListener(aVoid -> {
-                        // Data saved successfully
                         Toast.makeText(this, "User Registered!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(SignUp.this, Dashboard2.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
                     })
                     .addOnFailureListener(e -> {
-                        // Log the error
-                        Log.e("RegisterUser", "Error saving user data to Firestore: " + e.getMessage());
-
-                        // Provide user-friendly message
                         Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
         }
