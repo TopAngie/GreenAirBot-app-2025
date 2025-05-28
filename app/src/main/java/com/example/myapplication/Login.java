@@ -58,6 +58,11 @@ public class Login extends AppCompatActivity {
         passwordInput = findViewById(R.id.password);
 
 
+ TextView signUpLink = findViewById(R.id.slogan_nam4);
+        signUpLink.setOnClickListener(view -> {
+            Intent intent = new Intent(Login.this, SignUp.class);
+            startActivity(intent);
+        });
 
 
         callSignUp.setOnClickListener((view) -> {
