@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/activity_sign"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#5bc682"
@@ -26,11 +26,11 @@
         android:layout_width="276dp"
         android:layout_height="107dp"
         android:layout_marginBottom="196dp"
-        android:text="EcoDrive"
+        android:text="GreenAirBot"
         android:transitionName="logo_text"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="70sp"
+        android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,10 +42,11 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:layout_marginBottom="171dp"
-        android:text="An eco-friendly city application promotes sustainable living"
+        android:text="An eco-friendly chat-bot promotes sustainable living"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        android:textColor="#263238"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -39,7 +39,7 @@ private static int SPLASH_SCREEN=3500;
 
         image.setAnimation(topAnim);
         logo.setAnimation(bottomAnim);
-        slogan.setAnimation(bottomAnim);
+                 slogan.setAnimation(bottomAnim);
 
 new Handler().postDelayed(new Runnable() {
     @Override

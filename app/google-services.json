@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "596019525737",
+    "project_id": "ecodrive-fb340",
+    "storage_bucket": "ecodrive-fb340.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596019525737:android:5592b65d7cb163cd09caf8",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBI6Vk6OxImiWEG6LpnemJ0RT62rIhGuAY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
