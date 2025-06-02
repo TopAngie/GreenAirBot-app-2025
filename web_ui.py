@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify, session, render_template_string
 import os
+import time
+
 
 # Υποθέτω έχεις τις παρακάτω λειτουργίες ήδη από chatbot2.py
 from chatbot2 import (
-    check_lm_studio, load_and_embed_data, ask_lm_studio,
+    check_lm_studio, load_and_embed_data, ask_lm_studio, calculate_eco_points,
     remove_tonos, clean_lm_response, fallback_contexts
 )
 
@@ -25,7 +27,7 @@ HTML_TEMPLATE = """
     <meta charset="UTF-8">
     <title>GreenAirBot</title>
     <style>
-       body {
+             body {
     font-family: 'Segoe UI', sans-serif;
     margin: 0;
     padding: 0;
@@ -37,19 +39,41 @@ HTML_TEMPLATE = """
 header {
     background-color: #228B22;
     color: white;
-    padding: 1rem 0.5rem;
-    text-align: center;
+    padding: 1rem 1.5rem;
     border-bottom: 5px solid #196619;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    align-items: center;
+    justify-content: center; /* ΚΕΝΤΡΑΡΙΣΜΑ ΚΕΙΜΕΝΩΝ ΜΕΣΑ ΣΤΟ HEADER */
+    gap: 1.5rem;
+    flex-wrap: wrap;
 }
 
-header h1 {
+header img.bot-image {
+    position: absolute;
+    left: 1.5rem;                    /* Σταθερή απόσταση από αριστερά */
+    top: 7.5%;
+    transform: translateY(-50%);
+    height: 120px;
+    width: 300px;
+}
+
+.branding {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;  /* ***ΠΡΟΣΘΗΚΗ ΓΙΑ ΚΕΝΤΡΑΡΙΣΜΑ*** */
+    text-align: center;   /* ***ΠΡΟΣΘΗΚΗ ΓΙΑ ΚΕΝΤΡΑΡΙΣΜΑ*** */
+}
+
+.branding h1 {
     margin: 0;
     font-size: 2.1rem;
     letter-spacing: 0.5px;
 }
 
-header p {
+.branding p {
     margin-top: 0.4rem;
     font-size: 1.1rem;
     opacity: 0.95;
@@ -86,8 +110,6 @@ header p {
     color: #228B22;
     margin-bottom: 0.5rem;
 }
-
-/* === CHATBOX STYLE === */
 
 .chatbox {
     margin-top: 1.2rem;
@@ -126,8 +148,6 @@ header p {
     background-color: #dbf2db;
     border-bottom-left-radius: 0;
 }
-
-/* === FORM STYLE === */
 
 form {
     display: flex;
@@ -176,8 +196,6 @@ button:hover {
     font-size: 0.95rem;
 }
 
-/* === RESPONSIVE === */
-
 @media (max-width: 600px) {
     header h1 {
         font-size: 1.8rem;
@@ -196,15 +214,25 @@ button:hover {
         text-align: center;
     }
 }
+
+img {
+    max-width: 100px;
+    height: 60px;
+    margin-left: 1rem;
+    flex-shrink: 0;
+}
+
     </style>
 </head>
-<body>
 <header>
-    <h1>GreenAirBot</h1>
-    <p>Έξυπνες Πληροφορίες για Ποιότητα Αέρα, με τη Δύναμη των Ανοιχτών Δεδομένων</p>
+    <div class="branding">
+        <img src="/static/GreenAirBot.png" alt="GreenAirBot" class="bot-image">
+        <h1>GreenAirBot</h1>
+        <p>Έξυπνες Πληροφορίες για Ποιότητα Αέρα, με τη Δύναμη των Ανοιχτών Δεδομένων</p>
+    </div>
 </header>
-<div class="container">
 
+<div class="container">
     <section class="features">
         <div class="feature">
             <h3>Ζωντανός Χάρτης Καθαρού Αέρα</h3>
@@ -219,13 +247,18 @@ button:hover {
             <p>Σύνδεση με τον ΟΛΘ για δεδομένα ποιότητας αέρα σε πραγματικό χρόνο. Ορατοποίησε το αόρατο και ζήσε πιο έξυπνα, πιο καθαρά!</p>
         </div>
     </section>
-    <h2>GreenAirBot</h2>
 
- <form method="POST" action="/">
-    <input type="text" name="question" placeholder="Γράψε την ερώτησή σου">
-    <button type="submit">Ρώτησε</button>
-    <button type="submit" name="clear" value="1" style="background-color:#bbb; color:#000;">🗑 Εκκαθάριση</button>
-</form>
+    <h2>GreenAirBot</h2>
+    <div style="text-align:center; font-size: 1.2rem; margin-bottom: 1rem;">
+        🌱 Συνολικοί Πόντοι Οικολογικής Συμπεριφοράς:
+        <strong style="color: #228B22;">{{ eco_score }}</strong>
+    </div>
+
+    <form method="POST" action="/#chatbottom">
+        <input type="text" name="question" placeholder="Γράψε την ερώτησή σου">
+        <button type="submit">Ρώτησε</button>
+        <button type="submit" name="clear" value="1" style="background-color:#bbb; color:#000;">🗑 Εκκαθάριση</button>
+    </form>
 
     <div class="chatbox" id="chatbox">
         {% for speaker, msg in history %}
@@ -234,11 +267,11 @@ button:hover {
                 <p>{{ msg }}</p>
             </div>
         {% endfor %}
+        <a id="chatbottom"></a>
     </div>
 </div>
 
 <script>
-    // Scroll to bottom on page load
     window.onload = function() {
         const chatbox = document.getElementById('chatbox');
         chatbox.scrollTop = chatbox.scrollHeight;
@@ -246,6 +279,7 @@ button:hover {
 </script>
 </body>
 </html>
+
 """
 
 @app.route("/", methods=["GET", "POST"])
@@ -255,7 +289,11 @@ def index():
     if "chat_history" not in session:
         session["chat_history"] = []
 
-    if request.method == "POST":
+        if "eco_score" not in session:
+         session["eco_score"] = 0
+
+
+    if request.method == "POS8θT":
 
         # ✅ Έλεγχος για το κουμπί εκκαθάρισης
         if request.form.get("clear"):
@@ -268,6 +306,7 @@ def index():
 
         if question:
             clean_q = remove_tonos(question.lower())
+            eco_points, matched = calculate_eco_points(clean_q)
 
             # Έλεγχος για fallback λέξεις-κλειδιά
             fallback_hits = [
@@ -276,7 +315,9 @@ def index():
             ]
 
             if fallback_hits:
-                answer = "\n\n".join(fallback_hits)
+                 time.sleep(0.015)  # ⏱ Καθυστέρηση 2ms
+                 answer = "\n\n".join(fallback_hits)
+
 
             elif embed_model and collection:
                 embedding = embed_model.encode([f"query: {clean_q}"])[0]
@@ -295,15 +336,26 @@ def index():
             else:
                 answer = "⚠️ Δεν είναι δυνατή η επεξεργασία της ερώτησης αυτή τη στιγμή."
 
-            MAX_HISTORY = 20
+            MAX_HISTORY = 25
             session["chat_history"].append(("Εσύ", question))
-            session["chat_history"].append(("GreenAirBot", answer))
+
+            if eco_points > 0:
+                bonus_msg = (
+                    f"🌿 Μπράβο σου που έκανες καλό στο περιβάλλον! "
+                    f"Κέρδισες +{eco_points} πόντους φιλικής προς το περιβάλλον συμπεριφοράς! 💚"
+                )
+                session["chat_history"].append(("GreenAirBot", bonus_msg))
+            else:
+                session["chat_history"].append(("GreenAirBot", answer))
+
             session["chat_history"] = session["chat_history"][-MAX_HISTORY:]
             session.modified = True
+            session["eco_score"] = session.get("eco_score", 0) + eco_points
 
-        return render_template_string(HTML_TEMPLATE, history=session.get("chat_history", []))
 
-    return render_template_string(HTML_TEMPLATE, history=session.get("chat_history", []))
+    return render_template_string(HTML_TEMPLATE, history=session.get("chat_history", []), eco_score=session.get("eco_score", 0))
+
+
 
 
 
@@ -319,11 +371,15 @@ def chat_api():
         return jsonify({"error": "No question provided"}), 400
 
     clean_q = remove_tonos(question.lower())
+    eco_points, matched = calculate_eco_points(clean_q)
+
 
     fallback_hits = [text for keyword, text in fallback_contexts.items() if keyword in clean_q]
 
     if fallback_hits:
-        answer = "\n\n".join(fallback_hits)
+      time.sleep(0.015)  # ⏱ Καθυστέρηση 2ms
+      answer = "\n\n".join(fallback_hits)
+
     else:
         answer = ask_lm_studio(clean_q, "", [])
 
@@ -335,5 +391,9 @@ def ws_dummy():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True) 
+
+
+
+
 
