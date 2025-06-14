@@ -293,7 +293,7 @@ def index():
          session["eco_score"] = 0
 
 
-    if request.method == "POS8θT":
+    if request.method == "POST":
 
         # ✅ Έλεγχος για το κουμπί εκκαθάρισης
         if request.form.get("clear"):
