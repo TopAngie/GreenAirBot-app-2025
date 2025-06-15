@@ -1,0 +1,6 @@
+# LM Studio Configuration
+lm_api_url: "http://ollama:11434/v1"
+model_name: "mistral:latest"
+embed_model_name: "intfloat/e5-small"
+data_file: "GreenAirChatBot/airdatafiles3.txt"
+collection_name: "greenair_collection"

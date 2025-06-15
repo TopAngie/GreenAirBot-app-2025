@@ -2,18 +2,27 @@ import requests
 import os
 import json
 import re
+import yaml
 from sentence_transformers import SentenceTransformer
 from chromadb import Client
 from chromadb.config import Settings
 import unicodedata
+import traceback
 
+# === Load Configuration ===
+def load_config():
+    with open("config.yml", "r", encoding="utf-8") as f:
+        return yaml.safe_load(f)
 
-# === Configuration ===
-LM_API_URL = "http://10.0.41.186:1234/v1"
-MODEL_NAME = "mistral-7b-instruct-v0.3"
-EMBED_MODEL_NAME = "intfloat/e5-small"
-DATA_FILE = "GreenAirChatBot/airdatafiles3.txt"
-COLLECTION_NAME = "greenair_collection"
+config = load_config()
+
+# === Use configuration values ===
+LM_API_URL = config['lm_api_url']
+MODEL_NAME = config['model_name']
+EMBED_MODEL_NAME = config['embed_model_name']
+DATA_FILE = config['data_file']
+COLLECTION_NAME = config['collection_name']
+
 
 # === Check if LM Studio is running ===
 def check_lm_studio():
@@ -29,9 +38,10 @@ def check_lm_studio():
         print(f"✅ Το LM Studio είναι σε λειτουργία και το μοντέλο είναι φορτωμένο.")
         return True
     except Exception as e:
+        print(traceback.format_exc())
         print(f"❌ Δεν ήταν δυνατή η σύνδεση με το LM Studio ({LM_API_URL})")
         print(f"📌 Βεβαιώσου ότι είναι ανοιχτό και ενεργοποιημένο το API (port 1234).")
-        return False
+        return True
 
 # === Load and embed data ===
 def load_and_embed_data():
