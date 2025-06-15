@@ -38,10 +38,10 @@ def check_lm_studio():
         print(f"✅ Το LM Studio είναι σε λειτουργία και το μοντέλο είναι φορτωμένο.")
         return True
     except Exception as e:
-        print(traceback.format_exc())
+        # print(traceback.format_exc())
         print(f"❌ Δεν ήταν δυνατή η σύνδεση με το LM Studio ({LM_API_URL})")
         print(f"📌 Βεβαιώσου ότι είναι ανοιχτό και ενεργοποιημένο το API (port 1234).")
-        return True
+        return False
 
 # === Load and embed data ===
 def load_and_embed_data():
