@@ -1,24 +1,36 @@
-# GreenAirBot-app-2025
-Το GreenAirBot είναι ένα έξυπνο περιβαλλοντικό chatbot που παρέχει σε πραγματικό χρόνο πληροφορίες για την ποιότητα του αέρα και βοηθά τους χρήστες να κάνουν τις καλύτερες επιλογές για την υγεία τους και το περιβάλλον. Με τη χρήση ανοιχτών δεδομένων από τον Οργανισμό Λιμένος Θεσσαλονίκης (ΟΛΘ) και τεχνητής νοημοσύνης, το GreenAirBot απαντά σε ερωτήσεις όπως: «Ποια είναι η πιο καθαρή ώρα για βόλτα στο λιμάνι;» ή «Πώς επηρεάζουν τα πλοία την ατμόσφαιρα;».
+GreenAirBot is an intelligent environmental chatbot designed to provide real-time air quality information and help users make healthier and more sustainable choices.
 
-Η εφαρμογή του GreenAirBot θα ενσωματωθεί και σε Android εφαρμογή, δίνοντας στους χρήστες την δυνατότητα να παρακολουθούν την ποιότητα του αέρα και να ενημερώνονται σχετικά με την ρύπανση και τις καλύτερες ώρες για υπαίθριες δραστηριότητες, απευθείας από το κινητό τους. Είτε περπατάτε στην παραλιακή, είτε εργάζεστε κοντά στο λιμάνι, είτε απλώς θέλετε να αποφύγετε την ρύπανση, το GreenAirBot σας βοηθά να επιλέξετε τις πιο υγιεινές και βιώσιμες λύσεις για την καθημερινότητά σας.
+Developed using Artificial Intelligence (AI) and open data from the Thessaloniki Port Authority (THPA), GreenAirBot enables users to interact with environmental data through natural-language questions such as:
 
-Κύρια Χαρακτηριστικά:
- Απαντήσεις βασισμένες στα Ανοιχτά Δεδομένα, πλήρης έξυπνες πληροφορίες.
+"What is the cleanest time to take a walk around the port?"
 
-Προτάσεις για «Πράσινες Δραστηριότητες»
+"How do ships affect air quality?"
 
-Ενημέρωση: Η δυνατότητα να ενημερωθήτε για την ποιότητα του αέρα, ειδικά αν έχετε αναπνευστικά προβλήματα ή προτιμάτε καθαρές ώρες για εξωτερικές δραστηριότητες.
+The project is also designed for integration into an Android application, allowing users to monitor air quality, receive pollution updates, and identify the best times for outdoor activities directly from their mobile devices.
 
-Γιατί το GreenAirBot;
-Προστασία της Υγείας: Βοηθά τους χρήστες να αποφύγουν τις ώρες με υψηλή ρύπανση και να προστατεύσουν την αναπνευστική τους υγεία.
+Key Features
 
-Στήριξη στη Βιώσιμη Ζωή: Ενθαρρύνει τη χρήση βιώσιμων δραστηριοτήτων και πράσινων συνηθειών.
+AI-powered chatbot providing intelligent answers based on open environmental data
+Real-time air quality information
+Green activity recommendations based on environmental conditions
+Open Data integration from the Thessaloniki Port Authority
+Android application integration
+Natural-language interaction with environmental data
+Recommendations supporting healthier and more sustainable daily choices
+Why GreenAirBot?
 
-Αναγνώριση με Open Data: Χρησιμοποιεί ανοιχτά δεδομένα για να προσφέρει αξιόπιστες και ακριβείς πληροφορίες, συνδέοντας τους πολίτες με την τοπική περιβαλλοντική κατάσταση.
+Health Protection
+Helps users identify periods of higher pollution and choose cleaner times for outdoor activities.
 
-Αναπτύχθηκε στο πλαίσιο του διαγωνισμού OpenUp Thessaloniki Climate 2025.
+Sustainable Living
+Encourages environmentally conscious activities and sustainable everyday choices.
 
+Open Data and Civic Technology
+Transforms publicly available environmental data into accessible and practical information for citizens.
+
+Competition
+
+GreenAirBot was developed as part of the OpenUp Thessaloniki Climate 2025 competition, combining AI, open data and civic technology to address local environmental challenges.
 
 
 
